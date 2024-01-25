@@ -6,15 +6,21 @@ using UnityEngine;
 public class Scene_01 : MonoBehaviour
 {
     [SerializeField] Master master;
-    [SerializeField] GameObject[] rainAnim;
+    [SerializeField] GameObject[] rainSprite;
+
+    public enum State
+    {
+        Sleep, Walk
+    }
 
     void Start()
     {
+
     }
 
     void FixedUpdate()
     {
         // Rain animation in background
-        Common.Anim(rainAnim, rainAnim.Length);
+        Common.Anim(rainSprite);
     }
 }

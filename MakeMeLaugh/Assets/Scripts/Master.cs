@@ -6,24 +6,20 @@ public class Master : MonoBehaviour
 {
     public GameObject[] sceneCanvas;
 
-    public int activeScene = 0;
+    [HideInInspector] public bool isPlaying = false;
+    [HideInInspector] public int activeScene = 0;
 
     void Start()
     {
         Common.Init();
 
+        isPlaying = true;
         activeScene = 1;
-        SetScene(activeScene);
+        Common.ArraySetActive(sceneCanvas, activeScene);
     }
 
     void Update()
     {
 
-    }
-
-    void SetScene(int index)
-    {
-        for (int i = 0; i < sceneCanvas.Length; i++)
-            sceneCanvas[i].SetActive(i == index);
     }
 }
