@@ -6,14 +6,14 @@ public class Master : MonoBehaviour
 {
     public GameObject[] sceneCanvas;
 
-    [HideInInspector] public bool isPlaying = false;
+    [HideInInspector] public bool allowInput = false;
     [HideInInspector] public int activeScene = 0;
 
     void Start()
     {
         Common.Init();
 
-        isPlaying = true;
+        allowInput = true;
         activeScene = 1;
         Common.ArraySetActive(sceneCanvas, activeScene);
     }

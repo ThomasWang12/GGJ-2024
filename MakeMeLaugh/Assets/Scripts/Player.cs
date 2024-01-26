@@ -20,8 +20,8 @@ public class Player : MonoBehaviour
     enum direction { Left, Right };
     direction walkDir;
     float walkSpeed = 3f;
-
-    bool init_01 = false;
+    bool isSleeping = false;
+    int sleepStep = 0;
 
     void Start()
     {
@@ -32,36 +32,29 @@ public class Player : MonoBehaviour
     {
         pos = transform.position;
         mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        if (master.isPlaying)
-        {
-            switch (master.activeScene)
-            {
-                case 0: break;
-                case 1: Scene_01(); break;
-            }
-        }
     }
 
-    void Scene_01()
+    #region Scene 01
+
+    public void Scene01_Init()
     {
-        if (!init_01)
-        {
-            MoveEnd();
-            init_01 = true;
-        }
+        MoveEnd();
+    }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            walking = true;
-            target = mouse;
-            float duration = Mathf.Abs(pos.x - target.x) / walkSpeed;
-            transform.DOKill();
-            transform.DOMoveX(target.x, duration).SetEase(Ease.Linear);
-            walkDir = (pos.x > target.x) ? direction.Left : direction.Right;
-        }
+    public void Scene01_Input()
+    {
+        if (!master.allowInput) return;
 
-        idleSprite.SetActive(!walking);
+        walking = true;
+        target = mouse;
+        float duration = Mathf.Abs(pos.x - target.x) / walkSpeed;
+        transform.DOKill();
+        transform.DOMoveX(target.x, duration).SetEase(Ease.Linear);
+        walkDir = (pos.x > target.x) ? direction.Left : direction.Right;
+    }
+
+    public void Scene01_Walk()
+    {
         if (walking)
         {
             if (walkDir == direction.Left)
@@ -77,6 +70,15 @@ public class Player : MonoBehaviour
             if (Mathf.Abs(pos.x - target.x) < Common.margin)
                 MoveEnd();
         }
+        else
+        {
+            idleSprite.SetActive(true);
+        }
+    }
+
+    public void Scene01_Sleep()
+    {
+        //if (isSleeping)
     }
 
     void MoveEnd()
@@ -88,4 +90,6 @@ public class Player : MonoBehaviour
         Common.ArraySetActive(walkLeftSprite, -1);
         Common.ArraySetActive(walkRightSprite, -1);
     }
+
+    #endregion
 }
