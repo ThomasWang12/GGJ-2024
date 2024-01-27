@@ -15,6 +15,11 @@ public static class Method
         return gameObject.GetComponent<Collider2D>().OverlapPoint(mousePosition);
     }
 
+    public static bool PlayerOnCollider(Vector3 playerPosition, GameObject gameObject)
+    {
+        return gameObject.GetComponent<Collider2D>().OverlapPoint(playerPosition);
+    }
+
     public static void ArraySetActive(GameObject[] array, int index)
     {
         for (int i = 0; i < array.Length; i++)
@@ -33,5 +38,10 @@ public static class Method
         int currentFrame = Mathf.FloorToInt(((Time.time - startTime) % (frameTime * sprites.Length)) / frameTime);
         for (int i = 0; i < sprites.Length; i++)
             sprites[i].SetActive(i == currentFrame);
+    }
+
+    public static float Map(float value, float from1, float to1, float from2, float to2)
+    {
+        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
     }
 }

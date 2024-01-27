@@ -10,10 +10,17 @@ public class Scene_01 : MonoBehaviour
     public enum State { Sleep, Walk }
     public State state;
 
+    [Space(10)]
+    [Header("Scene")]
+
     [SerializeField] GameObject[] backgroundSprite;
     [SerializeField] GameObject[] rainSprite;
     [SerializeField] GameObject[] sleepSprite;
     [SerializeField] GameObject bed;
+    [SerializeField] GameObject door;
+
+    [Space(10)]
+    [Header("Player")]
 
     [SerializeField] GameObject player;
     [SerializeField] GameObject idleSprite;
@@ -28,13 +35,14 @@ public class Scene_01 : MonoBehaviour
     Vector2 walkTarget;
     float walkStartTime;
     float walkSpeed = 2f;
-    float walkAnimFrameTime = 0.333f;
 
     bool isGettingInBed = false;
     float besideBedX = -3.85f;
     int sleepStep = 0;
     int sleepStepMin = 0;
     int sleepStepMax = 100;
+
+    float besideDoorX = 6.7f;
 
     void Start()
     {
@@ -57,18 +65,14 @@ public class Scene_01 : MonoBehaviour
 
             if (Method.Click())
             {
-                // If player isn't clicking the bed
-                if (!Method.MouseOnCollider(bed))
-                {
-                    // Walk to that point
-                    WalkTo(master.mouse);
-                }
-                // Clicks the bed, go to sleep
-                else
-                {
+                // Player clicks the bed
+                if (Method.MouseOnCollider(bed))
                     GoToBed();
-                    Debug.Log("Going to bed");
-                }
+                // Player clicks the door
+                else if (Method.MouseOnCollider(door))
+                    GoToDoor();
+                // Walk to that point
+                else WalkTo(master.mouse);
             }
 
             // Character sprite
@@ -78,12 +82,12 @@ public class Scene_01 : MonoBehaviour
                 // Walking animation
                 if (walkDir == dir.Left)
                 {
-                    Method.Anim_FrameTime(walkStartTime, walkLeftSprite, walkAnimFrameTime);
+                    Method.Anim_FrameTime(walkStartTime, walkLeftSprite, Common.walkAnimFrameTime);
                     Method.ArraySetActive(walkRightSprite, -1);
                 }
                 if (walkDir == dir.Right)
                 {
-                    Method.Anim_FrameTime(walkStartTime, walkRightSprite, walkAnimFrameTime);
+                    Method.Anim_FrameTime(walkStartTime, walkRightSprite, Common.walkAnimFrameTime);
                     Method.ArraySetActive(walkLeftSprite, -1);
                 }
                 // Walking: reach the target
@@ -97,14 +101,19 @@ public class Scene_01 : MonoBehaviour
                     state = State.Sleep;
                     isGettingInBed = true;
                 }
+                // Walking: reach the door
+                if (pos.x >= besideDoorX - Common.margin)
+                {
+                    // Next scene
+                    WalkEnd();
+                    master.EndScene(1);
+                }
             }
         }
 
         if (state == State.Sleep)
         {
             Method.ArraySetActive(backgroundSprite, 1);
-
-            Debug.Log(sleepStep);
 
             if (Method.Click())
             {
@@ -177,6 +186,14 @@ public class Scene_01 : MonoBehaviour
         if (pos.x > besideBedX)
         {
             WalkTo(new Vector2(besideBedX, 0));
+        }
+    }
+
+    void GoToDoor()
+    {
+        if (pos.x < besideDoorX)
+        {
+            WalkTo(new Vector2(besideDoorX, 0));
         }
     }
 }
