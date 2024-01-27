@@ -6,7 +6,7 @@ using UnityEngine;
 public class Scene_02 : MonoBehaviour
 {
     [SerializeField] Master master;
-    public enum State { Walk }
+    public enum State { Walk, End }
     public State state;
 
     [Space(10)]
@@ -60,6 +60,7 @@ public class Scene_02 : MonoBehaviour
             {
                 // Next scene
                 WalkEnd();
+                state = State.End;
                 master.EndScene(2);
             }
 

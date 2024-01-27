@@ -54,9 +54,24 @@ public class Master : MonoBehaviour
         {
             1 => 2,
             2 => 8,
+            8 => 7,
+            7 => 9,
             _ => 0,
         };
-        FadeOut();
+
+        if (activeScene != 7 && activeScene != 9)
+            FadeOut();
+
+        if (activeScene == 7)
+        {
+            GoToScene(activeScene);
+            sceneCanvas[activeScene].GetComponent<Scene_07>().AutoSwitch();
+        }
+
+        if (activeScene == 9)
+        {
+            GoToScene(activeScene);
+        }
     }
 
     void FadeOut()

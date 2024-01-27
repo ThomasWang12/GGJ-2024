@@ -7,7 +7,7 @@ using UnityEngine;
 public class Scene_01 : MonoBehaviour
 {
     [SerializeField] Master master;
-    public enum State { Sleep, Walk }
+    public enum State { Sleep, Walk, End }
     public State state;
 
     [Space(10)]
@@ -106,6 +106,8 @@ public class Scene_01 : MonoBehaviour
                 {
                     // Next scene
                     WalkEnd();
+                    idleSprite.SetActive(true);
+                    state = State.End;
                     master.EndScene(1);
                 }
             }
