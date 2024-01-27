@@ -6,7 +6,7 @@ public class Scene_07 : MonoBehaviour
 {
     [SerializeField] Master master;
 
-    float waitTime = 1.75f;
+    float waitTime = 1.25f;
 
     public void AutoSwitch()
     {
