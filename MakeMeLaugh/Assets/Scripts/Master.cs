@@ -56,6 +56,7 @@ public class Master : MonoBehaviour
             2 => 8,
             8 => 7,
             7 => 9,
+            9 => 10,
             _ => 0,
         };
 
@@ -71,6 +72,7 @@ public class Master : MonoBehaviour
         if (activeScene == 9)
         {
             GoToScene(activeScene);
+            sceneCanvas[activeScene].GetComponent<Scene_09>().Init();
         }
     }
 

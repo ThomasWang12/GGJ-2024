@@ -12,7 +12,6 @@ public class Scene_08 : MonoBehaviour
     [Space(10)]
     [Header("Scene")]
 
-    [SerializeField] GameObject[] backgroundSprite;
     [SerializeField] GameObject vader;
 
     [Space(10)]
