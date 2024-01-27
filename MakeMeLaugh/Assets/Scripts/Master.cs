@@ -6,20 +6,33 @@ public class Master : MonoBehaviour
 {
     public GameObject[] sceneCanvas;
 
-    [HideInInspector] public bool allowInput = false;
-    [HideInInspector] public int activeScene = 0;
+    public int activeScene = 0;
+    [HideInInspector] public Vector2 mouse;
+
+    public PlayerState playerState;
+    public enum PlayerState
+    {
+        MoveInput, InAction
+    }
+
+    void Awake()
+    {
+        Common.Init();
+    }
 
     void Start()
     {
-        Common.Init();
-
-        allowInput = true;
-        activeScene = 1;
-        Common.ArraySetActive(sceneCanvas, activeScene);
+        GoToScene(1);
     }
 
     void Update()
     {
-
+        mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
+
+    public void GoToScene(int index)
+    {
+        activeScene = index;
+        Method.ArraySetActive(sceneCanvas, activeScene);
+    } 
 }

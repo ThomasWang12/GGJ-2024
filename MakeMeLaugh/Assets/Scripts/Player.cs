@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_01 : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [SerializeField] Master master;
-    [SerializeField] Scene_01 scene;
     [SerializeField] GameObject idleSprite;
     [SerializeField] GameObject[] walkLeftSprite;
     [SerializeField] GameObject[] walkRightSprite;
@@ -47,7 +46,7 @@ public class Player_01 : MonoBehaviour
             if (sleepStep == 0)
             {
                 // If not clicking the bed
-                if (!scene.bed.GetComponent<Collider2D>().OverlapPoint(Input.mousePosition))
+                /*if (!scene.bed.GetComponent<Collider2D>().OverlapPoint(Input.mousePosition))
                 {
                     walking = true;
                     target = mouse;
@@ -55,15 +54,15 @@ public class Player_01 : MonoBehaviour
                     transform.DOKill();
                     transform.DOMoveX(target.x, duration).SetEase(Ease.Linear);
                     walkDir = (pos.x > target.x) ? direction.Left : direction.Right;
-                }
+                }*/
             }
             else
             {
                 // If not clicking the bed
-                if (!scene.bed.GetComponent<Collider2D>().OverlapPoint(Input.mousePosition))
+                /*if (!scene.bed.GetComponent<Collider2D>().OverlapPoint(Input.mousePosition))
                 {
                     sleepStep--;
-                }
+                }*/
             }
         }
     }
@@ -74,13 +73,13 @@ public class Player_01 : MonoBehaviour
         {
             if (walkDir == direction.Left)
             {
-                Common.Anim(walkLeftSprite);
-                Common.ArraySetActive(walkRightSprite, -1);
+                Method.Anim(walkLeftSprite);
+                Method.ArraySetActive(walkRightSprite, -1);
             }
             if (walkDir == direction.Right)
             {
-                Common.Anim(walkRightSprite);
-                Common.ArraySetActive(walkLeftSprite, -1);
+                Method.Anim(walkRightSprite);
+                Method.ArraySetActive(walkLeftSprite, -1);
             }
             if (Mathf.Abs(pos.x - target.x) < Common.margin)
                 MoveEnd();
@@ -117,12 +116,12 @@ public class Player_01 : MonoBehaviour
         // sleepStep 0...49
         if (sleepStep >= 0 && sleepStep <= 49)
         {
-            Common.ArraySetActive(scene.sleepSprite, 0);
+            //Method.ArraySetActive(scene.sleepSprite, 0);
         }
         // sleepStep 50...100
         if (sleepStep >= 50 && sleepStep <= 100)
         {
-            Common.ArraySetActive(scene.sleepSprite, 1);
+            //Method.ArraySetActive(scene.sleepSprite, 1);
         }
     }
 
@@ -132,8 +131,8 @@ public class Player_01 : MonoBehaviour
         target = Vector2.zero;
         transform.DOKill();
         idleSprite.SetActive(true);
-        Common.ArraySetActive(walkLeftSprite, -1);
-        Common.ArraySetActive(walkRightSprite, -1);
+        Method.ArraySetActive(walkLeftSprite, -1);
+        Method.ArraySetActive(walkRightSprite, -1);
     }
 
     #endregion
