@@ -21,6 +21,9 @@ public class Master : MonoBehaviour
     [SerializeField] RawImage whiteScreen;
     float fadeDuration = 0.5f;
 
+    public bool wearHead = false;
+    public bool wearSaber = false;
+
     void Awake()
     {
         Common.Init();
@@ -53,10 +56,12 @@ public class Master : MonoBehaviour
         activeScene = index switch
         {
             1 => 2,
-            2 => 8,
+            2 => 3,
+            3 => 8,
             8 => 7,
             7 => 9,
             9 => 10,
+            10 => 11,
             _ => 0,
         };
 
@@ -74,6 +79,16 @@ public class Master : MonoBehaviour
             GoToScene(activeScene);
             sceneCanvas[activeScene].GetComponent<Scene_09>().Init();
         }
+
+        if (activeScene == 10)
+        {
+            sceneCanvas[activeScene].GetComponent<Scene_10>().Init();
+        }
+    }
+
+    public void Button_10()
+    {
+        EndScene(10);
     }
 
     void FadeOut()
